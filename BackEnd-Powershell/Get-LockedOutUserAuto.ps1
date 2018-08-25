@@ -1,12 +1,13 @@
 ﻿param (
     [string]$FilePath = "C:\LocalFolder",
+    [string]$DomainName = "YourDomainName.com",
+    $LogRetention = "90",
     $FileName = $null,
     $TempFileName = $null,
     [array]$NewValue = $null,
-    [string]$DomainName = "YourDomainName.com",
     [string]$UserName = "*",
     [datetime]$Today = (Get-Date -Format MM-dd-yy),
-    [datetime]$StartTime = (Get-Date).AddDays(-3)    
+    [datetime]$StartTime = (Get-Date).AddDays(-3)   
 )
 
 
@@ -107,4 +108,4 @@ $FileDataT | Export-Csv -Path "$FilePath\$FileName" -NoTypeInformation
 sleep 5
 
 Remove-Item "$FilePath\$TempFileName" -Force -Confirm:$false
-forfiles /s /p $FilePath /D -90 /C "cmd /c if @isdir==FALSE del /s /q @path"
+forfiles /s /p $FilePath /D -$LogRetention /C "cmd /c if @isdir==FALSE del /s /q @path"
