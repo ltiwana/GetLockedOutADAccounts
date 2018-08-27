@@ -7,18 +7,14 @@
     <framework targetVersion="4.6.1" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="Application Files\Get LockedOut AD Accounts_1_4_0_33\Get LockedOut AD Accounts.exe.manifest" size="5803">
+    <dependentAssembly dependencyType="install" codebase="Get LockedOut AD Accounts.exe.manifest" size="5803">
       <assemblyIdentity name="Get LockedOut AD Accounts.exe" version="1.4.0.33" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="amd64" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-<<<<<<< HEAD
-        <dsig:DigestValue>UAyiTD3Pd/+8AN1LIW95xHbU10Ef9hRBYlflw8N1OdE=</dsig:DigestValue>
-=======
         <dsig:DigestValue>hvkLkOPZk1vUITCvuIHzIAF30ktIdobxUNft1S6OSNM=</dsig:DigestValue>
->>>>>>> master
       </hash>
     </dependentAssembly>
   </dependency>
