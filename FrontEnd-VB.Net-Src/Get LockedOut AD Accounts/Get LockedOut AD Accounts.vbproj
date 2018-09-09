@@ -14,11 +14,7 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-<<<<<<< HEAD:FrontEnd-VB.Net-Src/Get LockedOut AD Accounts/Get LockedOut AD Accounts.vbproj
-    <PublishUrl>..\..\Build\</PublishUrl>
-=======
     <PublishUrl>..\..\FrontEnd-VB.Net-Build\</PublishUrl>
->>>>>>> master:FrontEnd-VB.Net-Src/Get LockedOut AD Accounts/Get LockedOut AD Accounts.vbproj
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
     <UpdateEnabled>false</UpdateEnabled>
