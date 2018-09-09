@@ -1,5 +1,6 @@
 ﻿param (
     [string]$FilePath = "C:\LocalFolder",
+    [int]$CSVRetention = "-90",
     $FileName = $null,
     $TempFileName = $null,
     [array]$NewValue = $null,
@@ -107,4 +108,4 @@ $FileDataT | Export-Csv -Path "$FilePath\$FileName" -NoTypeInformation
 sleep 5
 
 Remove-Item "$FilePath\$TempFileName" -Force -Confirm:$false
-forfiles /s /p $FilePath /D -90 /C "cmd /c if @isdir==FALSE del /s /q @path"
+forfiles /s /p $FilePath /D $CSVRetention /C "cmd /c if @isdir==FALSE del /s /q @path"
