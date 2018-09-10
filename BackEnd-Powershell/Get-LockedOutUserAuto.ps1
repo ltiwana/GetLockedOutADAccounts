@@ -24,12 +24,14 @@ Write-Host "`nScript will search for locked out events on the following domain c
 $dc
 
 
+"`n"
 
 $dc | foreach {
     
-    #$ErrorActionPreference = "SilentlyContinue"
-    "Querying " + $_
     
+    "Querying " + $_
+
+    $ErrorActionPreference = "SilentlyContinue"
     Get-WinEvent -ComputerName $_ -FilterHashtable @{LogName='Security';Id=4740;StartTime=$StartTime} |
         Where-Object {$_.Properties[0].Value -like "$UserName"} |
         Select-Object -Property TimeCreated, 
@@ -38,7 +40,7 @@ $dc | foreach {
         Select-Object -Property 'TimeCreated', 'UserName', 'ClientName'|
         Export-Csv -Path "$FilePath\$TempFileName" -Append -NoTypeInformation
 
-    #$ErrorActionPreference = "Continue"
+    $ErrorActionPreference = "Continue"
 
 }
 
@@ -106,6 +108,8 @@ $FileDataT | Export-Csv -Path "$FilePath\$FileName" -NoTypeInformation
 
 
 sleep 5
-
+"Removing Temporary files"
 Remove-Item "$FilePath\$TempFileName" -Force -Confirm:$false
+
+"Removing files older than $CSVRetention"
 forfiles /s /p $FilePath /D $CSVRetention /C "cmd /c if @isdir==FALSE del /s /q @path"
