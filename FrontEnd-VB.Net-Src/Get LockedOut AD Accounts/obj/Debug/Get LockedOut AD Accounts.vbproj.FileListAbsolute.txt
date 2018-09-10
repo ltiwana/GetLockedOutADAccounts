@@ -23,7 +23,6 @@ C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\bin\Debug\Get LockedOut AD Accounts.exe
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\bin\Debug\Get LockedOut AD Accounts.pdb
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\bin\Debug\Get LockedOut AD Accounts.xml
-C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\obj\Debug\Get LockedOut AD Accounts.vbprojAssemblyReference.cache
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\obj\Debug\Get_LockedOut_AD_Accounts.GetLockedOutADForm.resources
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\obj\Debug\Get_LockedOut_AD_Accounts.Resources.resources
 C:\Users\ltiwana\Documents\GitHub\GetLockedOutADAccounts\GetLockedOutADAccounts\FrontEnd-VB.Net-Src\Get LockedOut AD Accounts\obj\Debug\Get LockedOut AD Accounts.vbproj.GenerateResource.cache
