@@ -1,10 +1,10 @@
 ﻿param (
     [string]$FilePath = "C:\LocalFolder",
+    [string]$DomainName = "YourDomainName.com",
     [int]$CSVRetention = "-90",
     $FileName = $null,
     $TempFileName = $null,
     [array]$NewValue = $null,
-    [string]$DomainName = "YourDomainName.com",
     [string]$UserName = "*",
     [datetime]$Today = (Get-Date -Format MM-dd-yy),
     [datetime]$StartTime = (Get-Date).AddDays(-3)    
