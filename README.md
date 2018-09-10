@@ -1,2 +1,4 @@
 # GetLockedOutADAccounts
-GetADUserLockedOut Time to time there is always a user AD account that keeps on getting locked out, and you don't know which computer or system is doing it. You will find many scripts that can do this task but what makes it more interesting is that I have to give this access to our helpdesk group who do not have permissions to read security event logs and login or RDP into the Domain Controllers.
+Have you ever encountered an AD (Active Directory) account that continually gets locked-out and you don't know which system is causing the lockout? Do you want to equip your Helpdesk staff to get this information quickly so that as the first line of support, they can act promptly on locked-out AD account calls.
+
+"Get Locked Out AD Accounts" tool can help, without the need of additional permissions and the tool is unaffected if new DCs are introduced or removed from the AD environment.
