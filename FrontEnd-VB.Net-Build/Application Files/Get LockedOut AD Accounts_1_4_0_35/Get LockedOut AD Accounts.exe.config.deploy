@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+        <sectionGroup name="userSettings" type="System.Configuration.UserSettingsGroup, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" >
+            <section name="Get_LockedOut_AD_Accounts.Settings" type="System.Configuration.ClientSettingsSection, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" allowExeDefinition="MachineToLocalUser" requirePermission="false" />
+        </sectionGroup>
+    </configSections>
+    <startup>
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.6.1" />
+    </startup>
+    <userSettings>
+        <Get_LockedOut_AD_Accounts.Settings>
+            <setting name="USharePath" serializeAs="String">
+                <value>\\ServerName\ShareName\</value>
+            </setting>
+            <setting name="LastChange" serializeAs="String">
+                <value />
+            </setting>
+        </Get_LockedOut_AD_Accounts.Settings>
+    </userSettings>
+</configuration>
