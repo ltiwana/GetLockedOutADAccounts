@@ -4,3 +4,6 @@ Have you ever encountered an AD (Active Directory) account that continually gets
 "Get Locked Out AD Accounts" tool can help, without the need of additional permissions and the tool is unaffected if new DCs are introduced or removed from the AD environment.
 
 Read setup instructions here: https://github.com/ltiwana/GetLockedOutADAccounts/wiki 
+
+
+![alt text](/Media/Images/1.jpg)
