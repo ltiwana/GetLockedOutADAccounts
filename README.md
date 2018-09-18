@@ -9,4 +9,4 @@ Read setup instructions here: https://github.com/ltiwana/GetLockedOutADAccounts/
 ![alt text](/Media/Images/1.jpg)
 
 
-Read my LinkedIn Post here: Start here: https://www.linkedin.com/pulse/new-active-directory-account-lockout-tool-loveparteek-tiwana/
+Read my LinkedIn Post here: https://www.linkedin.com/pulse/new-active-directory-account-lockout-tool-loveparteek-tiwana/
