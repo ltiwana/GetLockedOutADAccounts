@@ -75,7 +75,7 @@ $dc | foreach {
 $FileData = Import-Csv -Path "$FilePath\$TempFileName" | Sort-Object timecreated, username, clientname -Unique | sort {$_.timecreated -as [datetime]} -Descending
 
 
-"`nSorting entries as per date"
+"`nSorting entries as per date...`n"
 $FileData | %{
     
     [datetime]$NewTime = $_.timecreated
@@ -105,6 +105,7 @@ $FileData | %{
             "Entry should be in New file $NewFileName"
             ("-" * "Entry should be in New file $NewFileName".Length)
             ($_ | ft -HideTableHeaders| Out-String).trim()
+            `n
             $NewFileData += $_
         }
         $NewFileData = $NewFileData | Sort-Object timecreated, username, clientname -Unique | sort {$_.timecreated -as [datetime]} -Descending
