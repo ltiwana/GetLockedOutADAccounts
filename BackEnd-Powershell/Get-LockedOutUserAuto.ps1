@@ -1,6 +1,6 @@
-﻿param (
+param (
     [string]$FilePath = "C:\LocalFolder",
-    [string]$DomainName = "YourDomainName.com",
+    [string]$DomainName = "YouDomainName.com",
     [int]$CSVRetention = "90",
     $FileName = $null,
     $TempFileName = $null,
