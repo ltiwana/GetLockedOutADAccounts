@@ -1,15 +1,15 @@
 ﻿param (
     [string]$FilePath = "C:\LocalFolder",
     [string]$DomainName = "YourDomainName.com",
-    [int]$CSVRetention = "-90",
+    [int]$CSVRetention = "90",
     $FileName = $null,
     $TempFileName = $null,
     [array]$NewValue = $null,
+    [array]$NewFileData = $null,
     [string]$UserName = "*",
     [datetime]$Today = (Get-Date -Format MM-dd-yy),
     [datetime]$StartTime = (Get-Date).AddDays(-3)    
 )
-
 
 $FileName = "Security-Events_$($Today.ToString('MM-dd-yy')).csv"
 $TempFileName = "Temp_Security-Events_$($Today.ToString('MM-dd-yy')).csv"
@@ -80,22 +80,31 @@ $FileData | %{
     
     [datetime]$NewTime = $_.timecreated
     $NewFileName = "Security-Events_$($NewTime.ToString('MM-dd-yy')).csv"
-    $NewFileData = Import-Csv "$FilePath\$NewFileName"
+
+    
+    if (Test-Path "$FilePath\$NewFileName") {
+        $NewFileData = Import-Csv "$FilePath\$NewFileName"
+    }
 
     if ($NewTime -ge $Today) {
         "Entry for today"
-        $_
+        ("-" * "Entry for today".Length)
+        ($_ | ft -HideTableHeaders | Out-String).trim()
+        "`n"
         [array]$FileDataT += $_
     }
     else {
         if (Test-Path -Path "$FilePath\$NewFileName") {
             "Entry should be in $NewFileName"
-            $_
+            ("-" * "Entry should be in $NewFileName".Length)
+            ($_ | ft -HideTableHeaders| Out-String).trim()
+            "`n"
             $NewFileData += $_
         }
         else {
             "Entry should be in New file $NewFileName"
-            $_
+            ("-" * "Entry should be in New file $NewFileName".Length)
+            ($_ | ft -HideTableHeaders| Out-String).trim()
             $NewFileData += $_
         }
         $NewFileData = $NewFileData | Sort-Object timecreated, username, clientname -Unique | sort {$_.timecreated -as [datetime]} -Descending
