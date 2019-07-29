@@ -122,4 +122,4 @@ sleep 5
 Remove-Item "$FilePath\$TempFileName" -Force -Confirm:$false
 
 "Removing files older than $CSVRetention"
-Get-ChildItem â€“Path $FilePath -Recurse -File  | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-$CSVRetention))} | Remove-Item -Confirm:$false -Force -Verbose
+Get-ChildItem –Path $FilePath\*.csv -Recurse -File  | Where-Object {($_.LastWriteTime -lt (Get-Date).AddDays(-$CSVRetention))} | Remove-Item -Confirm:$false -Force -Verbose
