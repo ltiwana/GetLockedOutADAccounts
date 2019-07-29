@@ -43,24 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="Microsoft.Management.Infrastructure" version="1.0.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="msil" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
-      <assemblyIdentity name="Microsoft.Management.Infrastructure.Native" version="1.0.0.0" publicKeyToken="31BF3856AD364E35" language="neutral" processorArchitecture="amd64" />
-    </dependentAssembly>
-  </dependency>
-  <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Get LockedOut AD Accounts.exe" size="114688">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Get LockedOut AD Accounts.exe" size="116224">
       <assemblyIdentity name="Get LockedOut AD Accounts" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>omHBzOV4AU7KtZZ09h/spsGRK/JGhl8nyoV1laulkoA=</dsig:DigestValue>
+        <dsig:DigestValue>cVX7dcwuqnEVxN0cAQ6Mw4tSZg3kul73q/fgXV1iPF0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

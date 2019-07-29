@@ -25,9 +25,12 @@ Partial Class GetLockedOutADForm
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GetLockedOutADForm))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(GetLockedOutADForm))
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
+        Me.Time = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Username = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Hostname = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.EnterUsername = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
@@ -46,9 +49,7 @@ Partial Class GetLockedOutADForm
         Me.lable6 = New System.Windows.Forms.Label()
         Me.SharePath = New System.Windows.Forms.TextBox()
         Me.AskUsername = New System.Windows.Forms.Label()
-        Me.Time = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Username = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Hostname = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Timer = New System.Windows.Forms.Timer(Me.components)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -56,14 +57,16 @@ Partial Class GetLockedOutADForm
         '
         'DataGridView1
         '
-        Me.DataGridView1.AllowDrop = True
         Me.DataGridView1.AllowUserToAddRows = False
         Me.DataGridView1.AllowUserToDeleteRows = False
-        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.DataGridView1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
         Me.DataGridView1.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.DataGridView1.BackgroundColor = System.Drawing.SystemColors.Control
         Me.DataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.DataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal
+        Me.DataGridView1.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SunkenHorizontal
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -74,12 +77,11 @@ Partial Class GetLockedOutADForm
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Time, Me.Username, Me.Hostname})
-        Me.DataGridView1.Location = New System.Drawing.Point(16, 151)
-        Me.DataGridView1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DataGridView1.Location = New System.Drawing.Point(24, 235)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.ReadOnly = True
-        Me.DataGridView1.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Sunken
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.ActiveCaption
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -90,19 +92,46 @@ Partial Class GetLockedOutADForm
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.GradientInactiveCaption
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.DataGridView1.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
+        Me.DataGridView1.RowHeadersWidth = 50
         Me.DataGridView1.RowTemplate.Height = 24
         Me.DataGridView1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.DataGridView1.Size = New System.Drawing.Size(334, 310)
+        Me.DataGridView1.Size = New System.Drawing.Size(501, 460)
         Me.DataGridView1.TabIndex = 3
+        '
+        'Time
+        '
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.Format = "G"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Time.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Time.HeaderText = "Time"
+        Me.Time.MinimumWidth = 8
+        Me.Time.Name = "Time"
+        Me.Time.ReadOnly = True
+        Me.Time.Width = 79
+        '
+        'Username
+        '
+        Me.Username.HeaderText = "Username"
+        Me.Username.MinimumWidth = 8
+        Me.Username.Name = "Username"
+        Me.Username.ReadOnly = True
+        Me.Username.Width = 119
+        '
+        'Hostname
+        '
+        Me.Hostname.HeaderText = "Hostname"
+        Me.Hostname.MinimumWidth = 8
+        Me.Hostname.Name = "Hostname"
+        Me.Hostname.ReadOnly = True
+        Me.Hostname.Width = 119
         '
         'EnterUsername
         '
         Me.EnterUsername.AcceptsReturn = True
-        Me.EnterUsername.Location = New System.Drawing.Point(188, 121)
-        Me.EnterUsername.Margin = New System.Windows.Forms.Padding(2)
+        Me.EnterUsername.Location = New System.Drawing.Point(282, 186)
         Me.EnterUsername.Name = "EnterUsername"
-        Me.EnterUsername.Size = New System.Drawing.Size(95, 20)
+        Me.EnterUsername.Size = New System.Drawing.Size(140, 26)
         Me.EnterUsername.TabIndex = 0
         '
         'Label1
@@ -111,10 +140,9 @@ Partial Class GetLockedOutADForm
         Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Label1.Location = New System.Drawing.Point(60, 29)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label1.Location = New System.Drawing.Point(90, 45)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(249, 21)
+        Me.Label1.Size = New System.Drawing.Size(364, 32)
         Me.Label1.TabIndex = 4
         Me.Label1.Text = "Search For Locked AD Accounts"
         '
@@ -122,10 +150,9 @@ Partial Class GetLockedOutADForm
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(16, 90)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.PictureBox1.Location = New System.Drawing.Point(24, 138)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(57, 57)
+        Me.PictureBox1.Size = New System.Drawing.Size(84, 86)
         Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
         Me.PictureBox1.TabIndex = 5
         Me.PictureBox1.TabStop = False
@@ -135,21 +162,20 @@ Partial Class GetLockedOutADForm
         Me.DateTimePicker1.Checked = False
         Me.DateTimePicker1.Cursor = System.Windows.Forms.Cursors.Hand
         Me.DateTimePicker1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.5!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DateTimePicker1.Location = New System.Drawing.Point(188, 91)
-        Me.DateTimePicker1.Margin = New System.Windows.Forms.Padding(2)
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(282, 140)
         Me.DateTimePicker1.MinDate = New Date(2018, 6, 1, 0, 0, 0, 0)
         Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(162, 20)
+        Me.DateTimePicker1.Size = New System.Drawing.Size(243, 27)
         Me.DateTimePicker1.TabIndex = 2
         '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(104, 94)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label2.Location = New System.Drawing.Point(156, 145)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(82, 13)
+        Me.Label2.Size = New System.Drawing.Size(114, 20)
         Me.Label2.TabIndex = 7
         Me.Label2.Text = "Select Date :"
         '
@@ -159,10 +185,9 @@ Partial Class GetLockedOutADForm
         Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.SystemColors.ControlDarkDark
-        Me.Label3.Location = New System.Drawing.Point(207, 74)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label3.Location = New System.Drawing.Point(310, 114)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(128, 15)
+        Me.Label3.Size = New System.Drawing.Size(179, 22)
         Me.Label3.TabIndex = 8
         Me.Label3.Text = "Default Date (Today)"
         '
@@ -171,10 +196,9 @@ Partial Class GetLockedOutADForm
         Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(23, 498)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label4.Location = New System.Drawing.Point(34, 766)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(98, 13)
+        Me.Label4.Size = New System.Drawing.Size(137, 20)
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "File Processed :"
         '
@@ -185,10 +209,9 @@ Partial Class GetLockedOutADForm
         Me.CurrentFile.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.CurrentFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CurrentFile.ForeColor = System.Drawing.Color.Silver
-        Me.CurrentFile.Location = New System.Drawing.Point(125, 497)
-        Me.CurrentFile.Margin = New System.Windows.Forms.Padding(2)
+        Me.CurrentFile.Location = New System.Drawing.Point(188, 765)
         Me.CurrentFile.Name = "CurrentFile"
-        Me.CurrentFile.Size = New System.Drawing.Size(225, 16)
+        Me.CurrentFile.Size = New System.Drawing.Size(338, 23)
         Me.CurrentFile.TabIndex = 10
         Me.CurrentFile.Text = "Current File Being Processed"
         Me.CurrentFile.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -196,11 +219,10 @@ Partial Class GetLockedOutADForm
         'ProgressBar1
         '
         Me.ProgressBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ProgressBar1.Location = New System.Drawing.Point(125, 472)
-        Me.ProgressBar1.Margin = New System.Windows.Forms.Padding(2)
+        Me.ProgressBar1.Location = New System.Drawing.Point(188, 726)
         Me.ProgressBar1.MarqueeAnimationSpeed = 1000
         Me.ProgressBar1.Name = "ProgressBar1"
-        Me.ProgressBar1.Size = New System.Drawing.Size(225, 16)
+        Me.ProgressBar1.Size = New System.Drawing.Size(338, 25)
         Me.ProgressBar1.TabIndex = 11
         Me.ProgressBar1.UseWaitCursor = True
         Me.ProgressBar1.Value = 1
@@ -210,10 +232,9 @@ Partial Class GetLockedOutADForm
         Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(57, 473)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.Label5.Location = New System.Drawing.Point(86, 728)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(64, 13)
+        Me.Label5.Size = New System.Drawing.Size(90, 20)
         Me.Label5.TabIndex = 12
         Me.Label5.Text = "Progress :"
         '
@@ -223,10 +244,9 @@ Partial Class GetLockedOutADForm
         Me.Search.Cursor = System.Windows.Forms.Cursors.Hand
         Me.Search.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Search.ForeColor = System.Drawing.Color.White
-        Me.Search.Location = New System.Drawing.Point(288, 113)
-        Me.Search.Margin = New System.Windows.Forms.Padding(2)
+        Me.Search.Location = New System.Drawing.Point(432, 174)
         Me.Search.Name = "Search"
-        Me.Search.Size = New System.Drawing.Size(62, 30)
+        Me.Search.Size = New System.Drawing.Size(93, 46)
         Me.Search.TabIndex = 1
         Me.Search.Text = "Search"
         Me.Search.UseVisualStyleBackColor = False
@@ -235,10 +255,9 @@ Partial Class GetLockedOutADForm
         '
         Me.lblVersion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblVersion.AutoSize = True
-        Me.lblVersion.Location = New System.Drawing.Point(284, 550)
-        Me.lblVersion.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lblVersion.Location = New System.Drawing.Point(426, 846)
         Me.lblVersion.Name = "lblVersion"
-        Me.lblVersion.Size = New System.Drawing.Size(79, 13)
+        Me.lblVersion.Size = New System.Drawing.Size(120, 20)
         Me.lblVersion.TabIndex = 14
         Me.lblVersion.Text = "Current Version"
         '
@@ -248,10 +267,9 @@ Partial Class GetLockedOutADForm
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckBox1.ForeColor = System.Drawing.Color.DarkGreen
-        Me.CheckBox1.Location = New System.Drawing.Point(16, 545)
-        Me.CheckBox1.Margin = New System.Windows.Forms.Padding(2)
+        Me.CheckBox1.Location = New System.Drawing.Point(24, 840)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(230, 17)
+        Me.CheckBox1.Size = New System.Drawing.Size(325, 24)
         Me.CheckBox1.TabIndex = 15
         Me.CheckBox1.Text = "Search all records for this username"
         Me.CheckBox1.UseVisualStyleBackColor = True
@@ -261,12 +279,12 @@ Partial Class GetLockedOutADForm
         Me.ContextMenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LogoffToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(110, 26)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(138, 36)
         '
         'LogoffToolStripMenuItem
         '
         Me.LogoffToolStripMenuItem.Name = "LogoffToolStripMenuItem"
-        Me.LogoffToolStripMenuItem.Size = New System.Drawing.Size(109, 22)
+        Me.LogoffToolStripMenuItem.Size = New System.Drawing.Size(137, 32)
         Me.LogoffToolStripMenuItem.Text = "Logoff"
         '
         'lable6
@@ -275,10 +293,9 @@ Partial Class GetLockedOutADForm
         Me.lable6.AutoSize = True
         Me.lable6.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lable6.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
-        Me.lable6.Location = New System.Drawing.Point(43, 523)
-        Me.lable6.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.lable6.Location = New System.Drawing.Point(64, 805)
         Me.lable6.Name = "lable6"
-        Me.lable6.Size = New System.Drawing.Size(78, 13)
+        Me.lable6.Size = New System.Drawing.Size(109, 20)
         Me.lable6.TabIndex = 17
         Me.lable6.Text = "Share Path :"
         '
@@ -289,10 +306,9 @@ Partial Class GetLockedOutADForm
         Me.SharePath.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.SharePath.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SharePath.ForeColor = System.Drawing.Color.Silver
-        Me.SharePath.Location = New System.Drawing.Point(125, 522)
-        Me.SharePath.Margin = New System.Windows.Forms.Padding(2)
+        Me.SharePath.Location = New System.Drawing.Point(188, 803)
         Me.SharePath.Name = "SharePath"
-        Me.SharePath.Size = New System.Drawing.Size(225, 16)
+        Me.SharePath.Size = New System.Drawing.Size(338, 23)
         Me.SharePath.TabIndex = 18
         Me.SharePath.Text = "\\ServerName\ShareName\"
         Me.SharePath.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -301,46 +317,24 @@ Partial Class GetLockedOutADForm
         '
         Me.AskUsername.AutoSize = True
         Me.AskUsername.Font = New System.Drawing.Font("Microsoft Sans Serif", 7.8!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.AskUsername.Location = New System.Drawing.Point(80, 124)
-        Me.AskUsername.Margin = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.AskUsername.Location = New System.Drawing.Point(120, 191)
         Me.AskUsername.Name = "AskUsername"
-        Me.AskUsername.Size = New System.Drawing.Size(109, 13)
+        Me.AskUsername.Size = New System.Drawing.Size(155, 20)
         Me.AskUsername.TabIndex = 2
         Me.AskUsername.Text = "Enter Username : "
         '
-        'Time
+        'Timer
         '
-        Me.Time.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.Format = "G"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Time.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Time.HeaderText = "Time"
-        Me.Time.Name = "Time"
-        Me.Time.ReadOnly = True
-        Me.Time.Width = 55
-        '
-        'Username
-        '
-        Me.Username.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Username.HeaderText = "Username"
-        Me.Username.Name = "Username"
-        Me.Username.ReadOnly = True
-        Me.Username.Width = 80
-        '
-        'Hostname
-        '
-        Me.Hostname.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None
-        Me.Hostname.HeaderText = "Hostname"
-        Me.Hostname.Name = "Hostname"
-        Me.Hostname.ReadOnly = True
-        Me.Hostname.Width = 80
+        Me.Timer.Enabled = True
+        Me.Timer.Interval = 500
         '
         'GetLockedOutADForm
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(370, 566)
+        Me.AutoScroll = True
+        Me.BackColor = System.Drawing.Color.White
+        Me.ClientSize = New System.Drawing.Size(555, 871)
         Me.Controls.Add(Me.SharePath)
         Me.Controls.Add(Me.lable6)
         Me.Controls.Add(Me.CheckBox1)
@@ -359,8 +353,7 @@ Partial Class GetLockedOutADForm
         Me.Controls.Add(Me.AskUsername)
         Me.Controls.Add(Me.DataGridView1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(2)
-        Me.MinimumSize = New System.Drawing.Size(381, 537)
+        Me.MinimumSize = New System.Drawing.Size(560, 796)
         Me.Name = "GetLockedOutADForm"
         Me.Text = "Get Locked Out AD User Accounts"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -392,4 +385,5 @@ Partial Class GetLockedOutADForm
     Friend WithEvents Time As DataGridViewTextBoxColumn
     Friend WithEvents Username As DataGridViewTextBoxColumn
     Friend WithEvents Hostname As DataGridViewTextBoxColumn
+    Friend WithEvents Timer As Timer
 End Class

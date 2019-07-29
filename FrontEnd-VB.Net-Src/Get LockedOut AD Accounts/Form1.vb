@@ -13,22 +13,21 @@ Imports System.Management.Automation.Runspaces
 Public Class GetLockedOutADForm
 
     Dim CurrWidth As Integer = Me.Width
-    Dim CurrHeight As Integer
-    Dim DGCurrHeight As Integer
-    Dim index As Integer = 0
+    Dim index As Integer
 
     Private Sub Form_Load(sender As Object, e As EventArgs) Handles Me.Load
-
+        Timer.Stop()
         DateTimePicker1.Value = DateTime.Now
         DateTimePicker1.MaxDate = DateTime.Now
         SharePath.Text = My.Settings.USharePath
-        lblVersion.Text = String.Format("Version: 1.4.0.33")
-        CurrHeight = Me.Height
-        DGCurrHeight = DataGridView1.Height
+        lblVersion.Text = String.Format("Version: 1.4.0.34")
+
     End Sub
+
 
     Private Sub Search_Click_1(sender As Object, e As EventArgs) Handles Search.Click
 
+        CheckBox1.Text = "Search all records for this username"
         Cursor = Cursors.WaitCursor
         Application.DoEvents()
 
@@ -37,20 +36,22 @@ Public Class GetLockedOutADForm
 
         'set minimum form width
         Me.Width = CurrWidth
-
         DateTimePicker1.MaxDate = DateTime.Now
+
+        CurrentFile.BackColor = Color.DodgerBlue
+        CurrentFile.ForeColor = Color.Silver
+
 
         Dim FormWidth As Integer = Me.Width
         Dim Width As Integer
         Dim intWidth As Integer = 0
         Dim addwidth As Integer = 0
         Dim rowNumber As Integer = 1
-
-        CurrentFile.BackColor = Color.DarkGreen
-        SharePath.BackColor = Color.DarkGreen
+        index = 0
 
         DataGridView1.Columns.Clear()
         DataGridView1.Rows.Clear()
+
         DataGridView1.DataSource = Nothing
 
         EnterUsername.Font = New Font(EnterUsername.Font, FontStyle.Bold)
@@ -59,10 +60,7 @@ Public Class GetLockedOutADForm
         Dim Username As String = EnterUsername.Text.Trim
         Dim thisDay As String = DateTimePicker1.Value.ToString("MM-dd-yy")
         Dim ResultFound As Boolean = False
-
         Dim Path As String = SharePath.Text
-
-
         Dim FileName As String = "Security-Events_" & thisDay & ".csv"
         Dim FilePath As String = Path & FileName
 
@@ -72,77 +70,71 @@ Public Class GetLockedOutADForm
 
             SharePath.BackColor = Color.DarkGreen
             SharePath.ForeColor = Color.White
-            'SharePath.Font = New Font(SharePath.Font, FontStyle.Bold)
 
-            Dim Dir As New System.IO.DirectoryInfo(Path)
-            Dim FileList = Dir.GetFiles("Security-Events_*.*")
+            If CheckBox1.Checked Then
+                Dim Dir As New System.IO.DirectoryInfo(Path)
+                Dim FileList = Dir.GetFiles("Security-Events_*.*", System.IO.SearchOption.AllDirectories)
 
-            'MsgBox(FileList.Count)
-            If FileList.Count = 0 Then
-                MsgBox("Path is valid but no files found, please check if files are there: " & Path & ".", MsgBoxStyle.Critical)
-                CurrentFile.Text = "Path is valid but no files found, please check if files are there: " & Path & "."
-                CurrentFile.BackColor = Color.Red
-                CurrentFile.ForeColor = Color.White
-                'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
-            Else
-                Console.Write(File.ReadAllLines(FilePath).Length)
+                Dim QueryMatchingFiles = From file In FileList
+                                         Where file.Extension = ".csv"
+                                         Let fileText = GetFileText(file.FullName)
+                                         Where fileText.ToLower.Contains(Username.ToLower())
+                                         Select file.Name
 
-                If CheckBox1.Checked Then
-
-                    Dim QueryMatchingFiles = From file In FileList
-                                             Where file.Extension = ".csv"
-                                             Let fileText = GetFileText(file.FullName)
-                                             Where fileText.ToLower.Contains(Username.ToLower())
-                                             Select file.Name
-
+                If FileList Is Nothing Then
+                    MsgBox("No files found, please check access to network or path: " & Path, MsgBoxStyle.Critical)
+                    CurrentFile.Text = "No files found, please check access to network or path: " & Path
+                    CurrentFile.BackColor = Color.Red
+                    CurrentFile.ForeColor = Color.White
+                    CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+                Else
                     For Each FileName In QueryMatchingFiles
                         GetRecords(FileName, Path, Username)
                     Next
-
                     If DataGridView1.RowCount = 0 Then
-                        MsgBox("No locked out events found for " & Username & ". Please try another username.", MsgBoxStyle.Information)
+                        MsgBox("No locked out events found for " & Username & ". Please try another username." & vbCrLf & "*Note: If this is a recent lockout, then please wait 5 minutes and try again at """ & Date.Now.AddMinutes(5).ToString("hh:mm tt") & """", MsgBoxStyle.Information)
                         CurrentFile.Text = "No locked for: " & Username
                         CurrentFile.BackColor = Color.Red
                         CurrentFile.ForeColor = Color.White
-                        'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+                        CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+                        BlinkControl()
+
                     End If
 
-                Else
-
-                    If File.Exists(FilePath) Then
-                        If File.ReadAllLines(FilePath).Length <> 0 Then
-                            GetRecords(FileName, Path, Username)
-                            CurrentFile.Text = FileName
-                            CurrentFile.BackColor = Color.DarkGreen
-                            CurrentFile.ForeColor = Color.White
-                            'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
-                        Else
-                            MsgBox(FileName & " is empty!", MsgBoxStyle.Information)
-                            CurrentFile.Text = FileName & " is empty!"
-                            CurrentFile.BackColor = Color.Red
-                            CurrentFile.ForeColor = Color.White
-                            'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
-                        End If
-                    ElseIf Not File.Exists(FilePath) Then
-                        MsgBox("File not found: " & FileName & ". Please try another date.", MsgBoxStyle.Critical)
-                        CurrentFile.Text = "File not found: " & FileName
-                        CurrentFile.BackColor = Color.Red
-                        CurrentFile.ForeColor = Color.White
-                        'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
-                    ElseIf File.ReadAllLines(FilePath).Length = 0 Then
-                        MsgBox("No locked out events found in: " & FileName & ". Please try another date.", MsgBoxStyle.Information)
-                        CurrentFile.Text = "File is empty: " & FileName
-                        CurrentFile.BackColor = Color.Red
-                        CurrentFile.ForeColor = Color.White
-                        'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+                End If
+            Else
+                If File.Exists(FilePath) Then
+                    If File.ReadAllLines(FilePath).Length <> 0 Then
+                        GetRecords(FileName, Path, Username)
                     End If
+                ElseIf Not File.Exists(FilePath) Then
+                    MsgBox("File not found: " & FileName & ". Please try another date.", MsgBoxStyle.Critical)
+                    CurrentFile.Text = "File not found: " & FileName
+                    CurrentFile.BackColor = Color.Red
+                    CurrentFile.ForeColor = Color.White
+                    CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+                ElseIf File.ReadAllLines(FilePath).Length = 0 Then
+
+                    MsgBox("No locked out events found in: " & FileName & ". Please try another date.", MsgBoxStyle.Information)
+                    CurrentFile.Text = "File is empty: " & FileName
+                    CurrentFile.BackColor = Color.Red
+                    CurrentFile.ForeColor = Color.White
+                    CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
                 End If
             End If
+
+
             For Each row As DataGridViewRow In DataGridView1.Rows
                 If row.IsNewRow Then Continue For
                 row.HeaderCell.Value = "" & rowNumber
                 rowNumber = rowNumber + 1
             Next
+
+            DataGridView1.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
+
+            DataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.DisplayedCells)
+
+
 
             For Each c In DataGridView1.Controls
                 If c.GetType() Is GetType(VScrollBar) Then
@@ -167,7 +159,7 @@ Public Class GetLockedOutADForm
             If (intWidth + addwidth) > DataGridView1.Width Then
 
                 Width = intWidth - DataGridView1.Width + addwidth
-                Me.Width = Me.Width + Width
+                Me.Width = Me.Width + Width + 2
 
             End If
         Else
@@ -178,7 +170,6 @@ Public Class GetLockedOutADForm
 
             'SharePath.Font = New Font(SharePath.Font, FontStyle.Bold)
         End If
-
         Cursor = Cursors.Default
     End Sub
 
@@ -200,14 +191,10 @@ Public Class GetLockedOutADForm
         End If
     End Sub
 
-
-
-    Private Sub ContextMenuStrip1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles ContextMenuStrip1.Click
-
-        Cursor = Cursors.WaitCursor
-        Application.DoEvents()
-
+    Private Sub ContextMenuStrip1_Click(sender As Object, e As EventArgs) Handles ContextMenuStrip1.Click
         If Not DataGridView1.Rows(index).IsNewRow Then
+            Cursor = Cursors.WaitCursor
+            Application.DoEvents()
 
             Dim username As String = DataGridView1.Rows(index).Cells(1).Value.ToString
             Dim hostname As String = DataGridView1.Rows(index).Cells(2).Value.ToString
@@ -217,13 +204,22 @@ Public Class GetLockedOutADForm
             scriptOut = RunScript(LoadScript(SharePath.Text & "GLU-LT-LogOff.ps1", username, hostname))
             MsgBox(scriptOut)
 
+            Cursor = Cursors.Default
         End If
-
-        Cursor = Cursors.Default
-
     End Sub
 #Enable Warning BC42105 ' Function doesn't return a value on all code paths
 
+    Private Sub BlinkControl()
+        For index As Integer = 1 To 5
+            Console.WriteLine("Chaning color to white")
+            CheckBox1.ForeColor = Color.White
+            Console.WriteLine("waiting")
+            'System.Threading.Thread.Sleep(10)
+            Console.WriteLine("Chaning color to red")
+            CheckBox1.ForeColor = Color.Red
+        Next
+        CheckBox1.ForeColor = Color.Red
+    End Sub
 
 
     Function GetFileText(ByVal name As String) As String
@@ -257,7 +253,7 @@ Public Class GetLockedOutADForm
 
         CurrentFile.Text = GRFilename
         CurrentFile.ForeColor = Color.White
-        'CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
+        CurrentFile.Font = New Font(CurrentFile.Font, FontStyle.Bold)
 
         Dim FileLength = File.ReadAllLines(GRFilePath).Length
         'MsgBox(FileLength)
@@ -312,7 +308,10 @@ Public Class GetLockedOutADForm
 
 
             If ResultFound = False And CheckBox1.Checked = False Then
-                MsgBox("No locked out events found.", MsgBoxStyle.Information)
+
+                MsgBox("No locked out events found for: " & GRUsername & vbCrLf & "*Note 1: If this is a recent lockout, then please wait 5 minutes. and try again at """ & Date.Now.AddMinutes(5).ToString("hh:mm tt") & """" & vbCrLf & "**Note 2: You can also try the option ""Search all records for: " & GRUsername & """", MsgBoxStyle.Information)
+                CheckBox1.Text = "Search all records for: " & GRUsername
+                Timer.Start()
             End If
 
         End Using
@@ -426,22 +425,29 @@ Public Class GetLockedOutADForm
         My.Settings.Reload()
     End Sub
 
+    Private Sub Timer_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer.Tick
+        index = index + 1
+        Console.WriteLine(index)
+        If CLng(index) Mod 2 > 0 Then
+            Console.WriteLine("Chaning color to white")
+            CheckBox1.ForeColor = Color.White
+        Else
+            Console.WriteLine("Chaning color to red")
+            CheckBox1.ForeColor = Color.Red
+        End If
 
+        If index = 8 Then
+            CheckBox1.ForeColor = Color.DarkGreen
+            Console.WriteLine("Stopping timer")
+            Console.WriteLine("Chaning color to red")
+            Timer.Stop()
+        End If
+    End Sub
     Private Sub SharePath_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
             Search.PerformClick()
         End If
     End Sub
-
-    Private Sub Form1_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.ResizeEnd
-
-        'MsgBox(CurrHeight & " " & Me.Height)
-        If CurrHeight <> Me.Height Then
-            Me.DataGridView1.Height = (Me.Height - CurrHeight) + DGCurrHeight
-        End If
-    End Sub
-
-
 End Class
 
 
