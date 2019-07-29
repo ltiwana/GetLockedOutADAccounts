@@ -200,11 +200,17 @@ Public Class GetLockedOutADForm
             Dim hostname As String = DataGridView1.Rows(index).Cells(2).Value.ToString
             Dim scriptOut As String
 
-            MsgBox("Logging off """ & username & """" & " from host """ & hostname & """")
-            scriptOut = RunScript(LoadScript(SharePath.Text & "GLU-LT-LogOff.ps1", username, hostname))
-            MsgBox(scriptOut)
+            'MsgBox("Logging off """ & username & """" & " from host """ & hostname & """. Press OK to continue.")
+            Dim result3 As DialogResult = MessageBox.Show("Log off """ & username & """" & " from host """ & hostname & """?", "Are you sure?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+
+            If result3 = DialogResult.Yes Then
+                scriptOut = RunScript(LoadScript(SharePath.Text & "GLU-LT-LogOff.ps1", username, hostname))
+                MsgBox(scriptOut)
+
+            End If
 
             Cursor = Cursors.Default
+
         End If
     End Sub
 #Enable Warning BC42105 ' Function doesn't return a value on all code paths
